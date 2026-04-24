@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>srch.bio — Link-in-bio for storytellers</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #0b0b0d;
+        --bg-elevated: #121218;
+        --surface: #18181f;
+        --border: rgba(255, 255, 255, 0.06);
+        --text: #f4f4f5;
+        --muted: #a1a1aa;
+        --accent: #38bdf8;
+        --accent-dim: rgba(56, 189, 248, 0.15);
+        --accent-2: #a78bfa;
+        --accent-2-dim: rgba(167, 139, 250, 0.14);
+        --radius-lg: 20px;
+        --radius-md: 14px;
+        --max: 1120px;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: Inter, system-ui, -apple-system, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .noise {
+        pointer-events: none;
+        position: fixed;
+        inset: 0;
+        opacity: 0.035;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        z-index: 0;
+      }
+
+      .glow {
+        pointer-events: none;
+        position: fixed;
+        top: -20%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: min(95vw, 880px);
+        height: 480px;
+        background:
+          radial-gradient(
+            ellipse 55% 45% at 72% 18%,
+            rgba(56, 189, 248, 0.14) 0%,
+            transparent 65%
+          ),
+          radial-gradient(
+            ellipse 50% 40% at 28% 22%,
+            rgba(167, 139, 250, 0.1) 0%,
+            transparent 60%
+          );
+        z-index: 0;
+      }
+
+      header,
+      main,
+      footer {
+        position: relative;
+        z-index: 1;
+      }
+
+      .wrap {
+        width: min(100% - 2.5rem, var(--max));
+        margin-inline: auto;
+      }
+
+      /* Nav */
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.25rem 0;
+      }
+
+      .logo {
+        font-weight: 700;
+        font-size: 1.05rem;
+        letter-spacing: -0.02em;
+        color: white;
+      }
+
+      .logo span {
+        color: var(--accent);
+      }
+
+      .nav-cta {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--text);
+        text-decoration: none;
+        padding: 0.5rem 1rem;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.03);
+        transition: border-color 0.2s, background 0.2s;
+      }
+
+      .nav-cta:hover {
+        border-color: rgba(167, 139, 250, 0.4);
+        background: var(--accent-dim);
+      }
+
+      /* Hero */
+      .hero {
+        padding: 2rem 0 4rem;
+        background-color: var(--bg-elevated);
+      }
+
+      .hero-grid {
+        display: grid;
+        gap: 3rem;
+        align-items: center;
+      }
+
+      @media (min-width: 900px) {
+        .hero-grid {
+          grid-template-columns: 1fr 1fr;
+          gap: 4rem;
+        }
+      }
+
+      .hero h1 {
+        font-size: clamp(2.25rem, 5vw, 3.25rem);
+        font-weight: 700;
+        letter-spacing: -0.03em;
+        line-height: 1.1;
+        margin: 0 0 1.25rem;
+      }
+
+      .hero-lead {
+        font-size: 1.125rem;
+        color: var(--muted);
+        max-width: 36ch;
+        margin: 0 0 2rem;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-family: inherit;
+        font-size: 1rem;
+        font-weight: 600;
+        padding: 0.9rem 1.75rem;
+        border-radius: 999px;
+        border: none;
+        cursor: pointer;
+        text-decoration: none;
+        background: var(--accent);
+        color: #0b0b0d;
+        transition: transform 0.15s, box-shadow 0.2s;
+      }
+
+      .btn:hover {
+        transform: translateY(-1px);
+        box-shadow:
+          0 12px 36px rgba(56, 189, 248, 0.32),
+          0 8px 28px rgba(167, 139, 250, 0.18);
+      }
+
+      .mock {
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
+      }
+
+      .mock img {
+        display: block;
+        width: 100%;
+        height: auto;
+        vertical-align: middle;
+      }
+
+      /* Sections */
+      section {
+        padding: 4rem 0;
+      }
+
+      h2.section-title {
+        font-size: clamp(1.75rem, 3vw, 2.25rem);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        margin: 0 0 2rem;
+        padding-bottom: 0.65rem;
+        border-bottom: 2px solid var(--accent);
+        width: fit-content;
+        max-width: 100%;
+      }
+
+      h2.section-title.section-title--solution {
+        border-bottom-color: var(--accent);
+      }
+
+      .cards {
+        display: grid;
+        gap: 1rem;
+      }
+
+      @media (min-width: 700px) {
+        .cards {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+
+      .card {
+        padding: 1.5rem;
+        border-radius: var(--radius-md);
+        background: var(--bg-elevated);
+        border: 1px solid var(--border);
+        border-left: 3px solid var(--accent);
+      }
+
+      .cards-solution .card {
+        border-left-color: var(--accent);
+      }
+
+      .card strong {
+        display: block;
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: var(--text);
+      }
+
+      .card p {
+        margin: 0;
+        font-size: 0.9375rem;
+        color: var(--muted);
+      }
+
+      .split {
+        display: grid;
+        gap: 3rem;
+        align-items: start;
+      }
+
+      @media (min-width: 900px) {
+        .split {
+          grid-template-columns: 1fr 1fr;
+          align-items: center;
+        }
+
+        .split.reverse .mock {
+          order: -1;
+        }
+      }
+
+      .cta-band {
+        text-align: center;
+        padding: 4rem 0 5rem;
+      }
+
+      footer {
+        border-top: 1px solid var(--border);
+        padding: 1.5rem 0;
+        text-align: center;
+        font-size: 0.8125rem;
+        color: var(--muted);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="noise" aria-hidden="true"></div>
+    <div class="glow" aria-hidden="true"></div>
+
+    <header>
+      <div class="wrap nav">
+        <div class="logo">srch<span>.bio</span></div>
+        <a class="nav-cta" href="#early-access">Get early access</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="wrap hero-grid">
+          <div>
+            <h1>Stop letting your best content die in the grid.</h1>
+            <p class="hero-lead">
+              Turn your Instagram posts into topic-based bundles. The only
+              link-in-bio built for storytellers.
+            </p>
+            <a class="btn" href="#early-access">Get early access</a>
+          </div>
+          <div class="mock" aria-hidden="true">
+            <img
+              src="image.png"
+              alt="Product preview: series stacks on a mobile profile"
+              width="502"
+              height="452"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="wrap">
+          <h2 class="section-title">We know your pain.</h2>
+          <div class="cards">
+            <article class="card">
+              <strong>The Algorithm Gap:</strong>
+              <p>
+                Most followers don’t find posts on the topic they’re
+                interested in.
+              </p>
+            </article>
+            <article class="card">
+              <strong>Profile Friction:</strong>
+              <p>
+                Digging through a grid to find an old post is a chore—and most
+                people won't do it.
+              </p>
+            </article>
+            <article class="card">
+              <strong>Lost Engagement:</strong>
+              <p>
+                If they can't find the next part of a series of posts, they
+                stop watching. You lose the follow.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="wrap split reverse">
+          <div>
+            <h2 class="section-title section-title--solution">Our solution.</h2>
+            <div
+              class="cards cards-solution"
+              style="grid-template-columns: 1fr"
+            >
+              <article class="card">
+                <strong>Smart Categorization:</strong>
+                <p>
+                  You define your content categories. We automatically categorize your posts into them.
+                </p>
+              </article>
+              <article class="card">
+                <strong>Deep-Link Navigation:</strong>
+                <p>
+                  Let your users navigate easily between bundled posts.
+                </p>
+              </article>
+              <article class="card">
+                <strong>Topics Analytics</strong>
+                <p>
+                  See exactly what topics your audience is most interested in.
+                </p>
+              </article>
+            </div>
+          </div>
+          <div class="mock">
+            <img
+              src="image-copy.png"
+              alt="Product preview: training program series on mobile"
+              width="484"
+              height="446"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section class="cta-band" id="early-access">
+        <div class="wrap">
+          <a class="btn" href="#early-access">Get early access</a>
+        </div>
+      </section>
+    </main>
+    
+    <footer>
+      <div class="wrap">srch.bio — Built for storytellers.</div>
+    </footer>
+  </body>
+</html>

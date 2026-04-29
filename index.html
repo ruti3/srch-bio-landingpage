@@ -12,19 +12,41 @@
     />
     <style>
       :root {
-        --bg: #0b0b0d;
-        --bg-elevated: #121218;
-        --surface: #18181f;
-        --border: rgba(255, 255, 255, 0.06);
-        --text: #f4f4f5;
-        --muted: #a1a1aa;
-        --accent: #38bdf8;
-        --accent-dim: rgba(56, 189, 248, 0.15);
-        --accent-2: #a78bfa;
-        --accent-2-dim: rgba(167, 139, 250, 0.14);
+        --bg: #fafafa;
+        --bg-elevated: #ffffff;
+        --surface: #ffffff;
+        --border: #dbdbdb;
+        --text: #262626;
+        --muted: #8e8e8e;
+        --accent: #5851db;
+        --accent-hover: #4842b8;
+        --btn-bg: var(--accent);
+        --btn-text: #ffffff;
+        --tint-band: #f0f0f0;
+        --card-tint: #f5f5f5;
+        --card-radius: 16px;
+        --card-shadow:
+          0 1px 2px rgba(38, 38, 38, 0.04),
+          0 6px 20px rgba(38, 38, 38, 0.07);
+        --card-shadow-hover:
+          0 2px 4px rgba(38, 38, 38, 0.05),
+          0 14px 36px rgba(38, 38, 38, 0.1);
         --radius-lg: 20px;
         --radius-md: 14px;
         --max: 1120px;
+        --solution-radius: 22px;
+        --solution-wire: rgba(0, 0, 0, 0.08);
+        --solution-shadow:
+          0 1px 2px rgba(24, 24, 30, 0.04),
+          0 18px 48px rgba(24, 24, 30, 0.07);
+        --solution-shadow-hover:
+          0 4px 12px rgba(24, 24, 30, 0.05),
+          0 26px 56px rgba(88, 81, 219, 0.1);
+        --hero-bg: #1a1a1a;
+        --hero-text: #fafafa;
+        --hero-muted: #a1a1a1;
+        --hero-visual-bg-start: #f5f5f4;
+        --hero-visual-bg-end: #ebebea;
       }
 
       *,
@@ -50,7 +72,7 @@
         pointer-events: none;
         position: fixed;
         inset: 0;
-        opacity: 0.035;
+        opacity: 0.02;
         background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
         z-index: 0;
       }
@@ -66,18 +88,24 @@
         background:
           radial-gradient(
             ellipse 55% 45% at 72% 18%,
-            rgba(56, 189, 248, 0.14) 0%,
+            rgba(88, 81, 219, 0.1) 0%,
             transparent 65%
           ),
           radial-gradient(
             ellipse 50% 40% at 28% 22%,
-            rgba(167, 139, 250, 0.1) 0%,
+            rgba(88, 81, 219, 0.06) 0%,
             transparent 60%
           );
         z-index: 0;
       }
 
-      header,
+      header {
+        position: relative;
+        z-index: 2;
+        background: var(--bg);
+        border-bottom: 1px solid var(--border);
+      }
+
       main,
       footer {
         position: relative;
@@ -101,7 +129,7 @@
         font-weight: 700;
         font-size: 1.05rem;
         letter-spacing: -0.02em;
-        color: white;
+        color: var(--text);
       }
 
       .logo span {
@@ -116,47 +144,125 @@
         padding: 0.5rem 1rem;
         border-radius: 999px;
         border: 1px solid var(--border);
-        background: rgba(255, 255, 255, 0.03);
-        transition: border-color 0.2s, background 0.2s;
+        background: var(--bg-elevated);
+        transition: border-color 0.2s, background 0.2s, color 0.2s;
       }
 
       .nav-cta:hover {
-        border-color: rgba(167, 139, 250, 0.4);
-        background: var(--accent-dim);
+        border-color: var(--accent);
+        background: var(--accent);
+        color: #ffffff;
       }
 
-      /* Hero */
+      /* Hero — split: dark copy | light visual */
       .hero {
-        padding: 2rem 0 4rem;
-        background-color: var(--bg-elevated);
+        padding: 0;
+        color: var(--hero-text);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        overflow: hidden;
       }
 
-      .hero-grid {
+      .hero-split {
         display: grid;
-        gap: 3rem;
-        align-items: center;
+        grid-template-columns: 1fr;
+        align-items: stretch;
+        min-height: min(52vh, 480px);
       }
 
       @media (min-width: 900px) {
-        .hero-grid {
+        .hero-split {
           grid-template-columns: 1fr 1fr;
-          gap: 4rem;
+          min-height: clamp(340px, 48vh, 520px);
         }
       }
 
+      .hero-copy {
+        background-color: var(--hero-bg);
+        display: flex;
+        align-items: center;
+        padding: 2rem 1.25rem 2.25rem;
+      }
+
+      .hero-copy-inner {
+        width: 100%;
+        max-width: 28rem;
+        text-align: left;
+      }
+
+      @media (max-width: 899px) {
+        .hero-copy {
+          justify-content: center;
+          text-align: center;
+        }
+
+        .hero-copy-inner {
+          text-align: center;
+        }
+
+        .hero .hero-lead {
+          margin-left: auto;
+          margin-right: auto;
+        }
+      }
+
+      @media (min-width: 600px) {
+        .hero-copy {
+          padding: 2.35rem max(1.25rem, calc((100vw - min(100vw - 2.5rem, var(--max))) / 2)) 2.5rem;
+        }
+      }
+
+      @media (min-width: 900px) {
+        .hero-copy {
+          padding-top: 2.5rem;
+          padding-bottom: 2.75rem;
+          padding-right: clamp(1.25rem, 4vw, 2.5rem);
+        }
+      }
+
+      .hero-visual {
+        background: linear-gradient(
+          168deg,
+          var(--hero-visual-bg-start) 0%,
+          #eeecea 45%,
+          var(--hero-visual-bg-end) 100%
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1.35rem clamp(1rem, 3vw, 2.25rem) 1.5rem;
+        min-height: min(26vh, 300px);
+      }
+
+      @media (min-width: 900px) {
+        .hero-visual {
+          min-height: unset;
+          padding: clamp(1rem, 2vw, 1.5rem) clamp(1rem, 2.5vw, 1.5rem);
+        }
+      }
+
+      .hero-visual img {
+        display: block;
+        width: 100%;
+        height: auto;
+        max-width: min(540px, 100%);
+        object-fit: contain;
+      }
+
       .hero h1 {
-        font-size: clamp(2.25rem, 5vw, 3.25rem);
+        font-size: clamp(2rem, 4.2vw, 3rem);
         font-weight: 700;
         letter-spacing: -0.03em;
         line-height: 1.1;
-        margin: 0 0 1.25rem;
+        margin: 0 0 1rem;
+        color: var(--hero-text);
       }
 
-      .hero-lead {
-        font-size: 1.125rem;
-        color: var(--muted);
-        max-width: 36ch;
-        margin: 0 0 2rem;
+      .hero .hero-lead {
+        font-size: 1.0625rem;
+        color: var(--hero-muted);
+        max-width: 42ch;
+        margin: 0 0 1.5rem;
+        line-height: 1.55;
       }
 
       .btn {
@@ -171,16 +277,15 @@
         border: none;
         cursor: pointer;
         text-decoration: none;
-        background: var(--accent);
-        color: #0b0b0d;
+        background: var(--btn-bg);
+        color: var(--btn-text);
         transition: transform 0.15s, box-shadow 0.2s;
       }
 
       .btn:hover {
         transform: translateY(-1px);
-        box-shadow:
-          0 12px 36px rgba(56, 189, 248, 0.32),
-          0 8px 28px rgba(167, 139, 250, 0.18);
+        background: var(--accent-hover);
+        box-shadow: 0 12px 28px rgba(88, 81, 219, 0.32);
       }
 
       .mock {
@@ -188,14 +293,13 @@
         overflow: hidden;
         border: 1px solid var(--border);
         background: var(--surface);
-        box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.08);
       }
 
       .mock img {
         display: block;
         width: 100%;
         height: auto;
-        vertical-align: middle;
       }
 
       /* Sections */
@@ -218,63 +322,449 @@
         border-bottom-color: var(--accent);
       }
 
-      .cards {
+      /* Pain — high-impact cards */
+      .pain-section {
+        position: relative;
+        padding: 5rem 0;
+        background: linear-gradient(
+          165deg,
+          rgba(88, 81, 219, 0.09) 0%,
+          rgba(250, 250, 250, 0.98) 45%,
+          var(--bg) 100%
+        );
+        border-top: 1px solid rgba(88, 81, 219, 0.12);
+        border-bottom: 1px solid rgba(88, 81, 219, 0.08);
+        overflow: hidden;
+      }
+
+      .pain-section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        pointer-events: none;
+      }
+
+      .pain-kicker {
+        margin: 0 0 0.5rem;
+        font-size: 0.8125rem;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--accent);
+      }
+
+      .pain-section .section-title {
+        margin-bottom: 2.25rem;
+      }
+
+      .pain-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
         display: grid;
         gap: 1rem;
+        grid-template-columns: 1fr;
+      }
+
+      @media (min-width: 700px) {
+        .pain-list {
+          gap: 1.25rem;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+
+      .pain-list__item {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 1rem 1.25rem;
+        align-items: start;
+        margin: 0;
+        padding: 1.35rem 1.35rem 1.4rem 1.25rem;
+        border-radius: var(--radius-md);
+        border: 1px solid var(--border);
+        background: var(--surface);
+        box-shadow: var(--card-shadow);
+        opacity: 0;
+        animation: pain-reveal 0.65s ease forwards;
+        transition:
+          transform 0.25s ease,
+          box-shadow 0.25s ease,
+          border-color 0.25s ease;
+      }
+
+      .pain-list__item:nth-child(1) {
+        animation-delay: 0.05s;
+      }
+
+      .pain-list__item:nth-child(2) {
+        animation-delay: 0.18s;
+      }
+
+      .pain-list__item:nth-child(3) {
+        animation-delay: 0.31s;
+      }
+
+      .pain-list__item:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--card-shadow-hover);
+        border-color: rgba(88, 81, 219, 0.28);
+      }
+
+      .pain-list__mark {
+        display: inline-flex;
+        flex-shrink: 0;
+        align-items: center;
+        justify-content: center;
+        color: var(--accent);
+        line-height: 0;
+      }
+
+      .pain-list__mark svg {
+        display: block;
+        width: 1.125rem;
+        height: 1.125rem;
+      }
+
+      .pain-list__content {
+        min-width: 0;
+      }
+
+      .pain-list__hook {
+        margin: 0 0 0.45rem;
+        font-size: clamp(1.0625rem, 2.2vw, 1.1875rem);
+        font-weight: 600;
+        letter-spacing: -0.028em;
+        line-height: 1.28;
+        color: var(--text);
+      }
+
+      .pain-list__text {
+        margin: 0;
+        font-size: 0.9375rem;
+        line-height: 1.5;
+        letter-spacing: -0.015em;
+        color: var(--muted);
+      }
+
+      @keyframes pain-reveal {
+        from {
+          opacity: 0;
+          transform: translateY(14px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .pain-list__item {
+          animation: none;
+          opacity: 1;
+          transition: none;
+        }
+
+        .pain-list__item:hover {
+          transform: none;
+        }
+      }
+
+      .cards {
+        display: grid;
+        gap: 1.25rem;
       }
 
       @media (min-width: 700px) {
         .cards {
+          gap: 1.5rem;
           grid-template-columns: repeat(3, 1fr);
         }
       }
 
       .card {
-        padding: 1.5rem;
-        border-radius: var(--radius-md);
-        background: var(--bg-elevated);
+        position: relative;
+        padding: 1.375rem 1.5rem 1.5rem;
+        border-radius: var(--card-radius);
         border: 1px solid var(--border);
-        border-left: 3px solid var(--accent);
+        border-top: 2px solid var(--accent);
+        background: var(--surface);
+        box-shadow: var(--card-shadow);
+        transition:
+          transform 0.22s ease,
+          box-shadow 0.22s ease,
+          border-color 0.22s ease;
       }
 
-      .cards-solution .card {
-        border-left-color: var(--accent);
+      .card:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--card-shadow-hover);
+        border-color: #d1d1d1;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .card {
+          transition: none;
+        }
+
+        .card:hover {
+          transform: none;
+        }
       }
 
       .card strong {
         display: block;
-        font-size: 1rem;
+        font-size: 0.9375rem;
         font-weight: 600;
+        letter-spacing: -0.02em;
+        line-height: 1.35;
         margin-bottom: 0.5rem;
         color: var(--text);
       }
 
       .card p {
         margin: 0;
-        font-size: 0.9375rem;
+        font-size: 0.875rem;
+        line-height: 1.55;
+        letter-spacing: -0.01em;
         color: var(--muted);
       }
 
-      .split {
-        display: grid;
-        gap: 3rem;
-        align-items: start;
+      /* Solution — premium split: mock + stacked steps */
+      .solution-section-premium {
+        position: relative;
+        padding: clamp(3.5rem, 8vw, 5.75rem) 0 clamp(3.75rem, 7vw, 5.5rem);
+        background:
+          radial-gradient(
+            ellipse 95% 65% at 12% 18%,
+            rgba(88, 81, 219, 0.05) 0%,
+            transparent 55%
+          ),
+          radial-gradient(
+            ellipse 70% 50% at 92% 85%,
+            rgba(88, 81, 219, 0.04) 0%,
+            transparent 48%
+          ),
+          linear-gradient(
+            180deg,
+            #fdfdfd 0%,
+            #fafafa 42%,
+            #ffffff 100%
+          );
+        border-top: 1px solid var(--solution-wire);
+        border-bottom: 1px solid var(--solution-wire);
       }
 
-      @media (min-width: 900px) {
-        .split {
-          grid-template-columns: 1fr 1fr;
-          align-items: center;
+      .solution-section__intro {
+        margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
+      }
+
+      .solution-section__title {
+        font-size: clamp(2rem, 4vw, 2.75rem);
+        font-weight: 700;
+        letter-spacing: -0.038em;
+        line-height: 1.1;
+        margin: 0 0 1rem;
+        padding: 0;
+        border: none;
+        color: var(--text);
+      }
+
+      .solution-section__subtitle {
+        margin: 0;
+        max-width: 34rem;
+        font-size: clamp(1rem, 2vw, 1.1875rem);
+        font-weight: 400;
+        line-height: 1.62;
+        letter-spacing: -0.018em;
+        color: #5c5c61;
+      }
+
+      .solution-split {
+        display: grid;
+        gap: clamp(2.5rem, 5vw, 3.5rem);
+        align-items: center;
+        grid-template-columns: 1fr;
+      }
+
+      @media (min-width: 992px) {
+        .solution-split {
+          grid-template-columns: minmax(260px, 0.95fr) minmax(300px, 1.05fr);
+          gap: clamp(2.5rem, 4.5vw, 4.25rem);
+        }
+      }
+
+      .solution-mock-column {
+        display: flex;
+        justify-content: center;
+      }
+
+      .solution-diagram {
+        margin: 0;
+        width: 100%;
+      }
+
+      .solution-diagram img {
+        display: block;
+        width: 100%;
+        height: auto;
+        border-radius: clamp(14px, 2vw, 20px);
+        border: 1px solid var(--solution-wire);
+        box-shadow:
+          var(--solution-shadow),
+          0 0 0 1px rgba(255, 255, 255, 0.9) inset;
+      }
+
+      .solution-steps {
+        display: flex;
+        flex-direction: column;
+        gap: clamp(1.125rem, 2.5vw, 1.5rem);
+      }
+
+      .solution-step-card {
+        display: flex;
+        gap: 1.25rem;
+        align-items: flex-start;
+        padding: clamp(1.35rem, 2.5vw, 1.625rem) clamp(1.35rem, 2.5vw, 1.75rem);
+        border-radius: var(--solution-radius);
+        border: 1px solid var(--solution-wire);
+        background: rgba(255, 255, 255, 0.88);
+        backdrop-filter: blur(8px);
+        box-shadow: var(--solution-shadow);
+        transition:
+          transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+          box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+          border-color 0.35s ease,
+          background 0.35s ease;
+      }
+
+      .solution-step-card:hover,
+      .solution-step-card:focus-within {
+        transform: translateY(-5px);
+        box-shadow: var(--solution-shadow-hover);
+        border-color: rgba(88, 81, 219, 0.28);
+        background: linear-gradient(180deg, #ffffff 0%, #fcfbff 68%);
+      }
+
+      .solution-step-card:focus-within {
+        outline: none;
+      }
+
+      .solution-step-card__icon-wrap {
+        flex-shrink: 0;
+        width: 50px;
+        height: 50px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(
+          148deg,
+          rgba(88, 81, 219, 0.16) 0%,
+          rgba(88, 81, 219, 0.05) 100%
+        );
+        border: 1px solid rgba(88, 81, 219, 0.14);
+        color: var(--accent);
+      }
+
+      .solution-step-card__icon-wrap svg {
+        width: 24px;
+        height: 24px;
+      }
+
+      .solution-step-card__content {
+        min-width: 0;
+      }
+
+      .solution-step-card__title {
+        margin: 0 0 0.57rem;
+        font-size: clamp(1.02rem, 1.85vw, 1.09375rem);
+        font-weight: 600;
+        letter-spacing: -0.026em;
+        line-height: 1.35;
+        color: var(--text);
+      }
+
+      .solution-step-card__step {
+        font-size: 0.75rem;
+        font-weight: 700;
+        font-variant-numeric: tabular-nums;
+        letter-spacing: 0.04em;
+        color: var(--accent);
+        margin-right: 0.375rem;
+        opacity: 0.92;
+      }
+
+      .solution-step-card__copy {
+        margin: 0;
+        font-size: 0.9375rem;
+        line-height: 1.64;
+        letter-spacing: -0.014em;
+        color: #6a6a6f;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .solution-step-card:hover,
+        .solution-step-card:focus-within {
+          transform: none;
         }
 
-        .split.reverse .mock {
-          order: -1;
+        .solution-step-card {
+          transition: box-shadow 0.2s, border-color 0.2s;
+        }
+
+        .solution-premium-reveal {
+          opacity: 1 !important;
+          transform: none !important;
+          transition: none !important;
+        }
+      }
+
+      @media (prefers-reduced-motion: no-preference) {
+        .solution-premium-reveal {
+          opacity: 0;
+          transform: translateY(32px);
+          transition:
+            opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+            transform 0.78s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .solution-section-premium.is-visible .solution-premium-reveal {
+          opacity: 1;
+          transform: translateY(0);
+        }
+
+        .solution-section-premium.is-visible .solution-step-card:nth-child(1).solution-premium-reveal {
+          transition-delay: 0.08s;
+        }
+
+        .solution-section-premium.is-visible .solution-step-card:nth-child(2).solution-premium-reveal {
+          transition-delay: 0.18s;
+        }
+
+        .solution-section-premium.is-visible .solution-step-card:nth-child(3).solution-premium-reveal {
+          transition-delay: 0.28s;
+        }
+
+        .solution-section-premium.is-visible .solution-step-card:nth-child(4).solution-premium-reveal {
+          transition-delay: 0.38s;
+        }
+
+        .solution-section-premium.is-visible .solution-mock-column.solution-premium-reveal {
+          transition-delay: 0.12s;
+        }
+
+        .solution-section-premium.is-visible .solution-section__intro.solution-premium-reveal {
+          transition-delay: 0s;
         }
       }
 
       .cta-band {
         text-align: center;
         padding: 4rem 0 5rem;
+        background: var(--tint-band);
       }
 
       footer {
@@ -299,90 +789,229 @@
 
     <main>
       <section class="hero">
-        <div class="wrap hero-grid">
-          <div>
-            <h1>Stop letting your best content die in the grid.</h1>
-            <p class="hero-lead">
-              Turn your Instagram posts into topic-based bundles. The only
-              link-in-bio built for storytellers.
-            </p>
-            <a class="btn" href="https://tally.so/r/Zja2yo">Get early access</a>
-          </div>
-          <div class="mock" aria-hidden="true">
-            <img
-              src="image.png"
-              alt="Product preview: series stacks on a mobile profile"
-              width="502"
-              height="452"
-            />
-          </div>
-        </div>
-      </section>
-
-      <section>
-        <div class="wrap">
-          <h2 class="section-title">We know your pain.</h2>
-          <div class="cards">
-            <article class="card">
-              <strong>The Algorithm Gap:</strong>
-              <p>
-                Most followers don’t find posts on the topic they’re
-                interested in.
+        <div class="hero-split">
+          <div class="hero-copy">
+            <div class="hero-copy-inner">
+              <h1>Stop letting your best content die in the grid.</h1>
+              <p class="hero-lead">
+                Turn your Instagram posts into topic-based bundles. The only link-in-bio built for storytellers.
               </p>
-            </article>
-            <article class="card">
-              <strong>Profile Friction:</strong>
-              <p>
-                Digging through a grid to find an old post is a chore—and most
-                people won't do it.
-              </p>
-            </article>
-            <article class="card">
-              <strong>Lost Engagement:</strong>
-              <p>
-                If they can't find the next part of a series of posts, they
-                stop watching. You lose the follow.
-              </p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section>
-        <div class="wrap split reverse">
-          <div>
-            <h2 class="section-title section-title--solution">Our solution.</h2>
-            <div
-              class="cards cards-solution"
-              style="grid-template-columns: 1fr"
-            >
-              <article class="card">
-                <strong>Smart Categorization:</strong>
-                <p>
-                  You define your content categories. We automatically categorize your posts into them.
-                </p>
-              </article>
-              <article class="card">
-                <strong>Deep-Link Navigation:</strong>
-                <p>
-                  Let your users navigate easily between bundled posts.
-                </p>
-              </article>
-              <article class="card">
-                <strong>Topics Analytics</strong>
-                <p>
-                  See exactly what topics your audience is most interested in.
-                </p>
-              </article>
+              <a class="btn" href="https://tally.so/r/Zja2yo">Get early access</a>
             </div>
           </div>
-          <div class="mock">
+          <div class="hero-visual">
             <img
-              src="image-copy.png"
-              alt="Product preview: training program series on mobile"
-              width="484"
-              height="446"
+              src="meal-prep-mockup.png"
+              alt="Ben_TasteCo link-in-bio profiles and meal-prep topic grid on phones"
+              width="1710"
+              height="1360"
+              loading="eager"
+              decoding="async"
             />
+          </div>
+        </div>
+      </section>
+
+      <section class="pain-section" aria-labelledby="pain-heading">
+        <div class="wrap">
+          <h2 id="pain-heading" class="section-title">We know your pain.</h2>
+          <ul class="pain-list">
+            <li class="pain-list__item">
+              <span class="pain-list__mark" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+                  <path
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M6 6l12 12M18 6L6 18"
+                  />
+                </svg>
+              </span>
+              <div class="pain-list__content">
+                <p class="pain-list__hook">
+                  Followers can’t find the content they want.
+                </p>
+              </div>
+            </li>
+            <li class="pain-list__item">
+              <span class="pain-list__mark" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+                  <path
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M6 6l12 12M18 6L6 18"
+                  />
+                </svg>
+              </span>
+              <div class="pain-list__content">
+                <p class="pain-list__hook">
+                  Great posts disappear in the grid.
+                </p>
+              </div>
+            </li>
+            <li class="pain-list__item">
+              <span class="pain-list__mark" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+                  <path
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M6 6l12 12M18 6L6 18"
+                  />
+                </svg>
+              </span>
+              <div class="pain-list__content">
+                <p class="pain-list__hook">
+                  Series lose momentum between parts.
+                </p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section
+        class="solution-section-premium"
+        id="solution"
+        aria-labelledby="solution-heading"
+      >
+        <div class="wrap">
+          <h2 id="solution-heading" class="section-title">Our solution</h2>
+
+          <div class="solution-split">
+            <div class="solution-mock-column solution-premium-reveal">
+              <figure class="solution-diagram">
+                <img
+                  src="solution-flow.png"
+                  alt="Illustration of the srch.bio flow from Instagram bio to category dashboard and onboarding steps"
+                  width="1478"
+                  height="1198"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+            </div>
+
+            <div class="solution-steps">
+              <article
+                class="solution-step-card solution-premium-reveal"
+              >
+                <div class="solution-step-card__icon-wrap" aria-hidden="true">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <rect width="20" height="20" x="2" y="2" rx="5" />
+                    <circle cx="12" cy="12" r="4" />
+                    <circle cx="18" cy="6" r="1.2" fill="currentColor" stroke="none" />
+                  </svg>
+                </div>
+                <div class="solution-step-card__content">
+                  <h3 class="solution-step-card__title">
+                    <span class="solution-step-card__step">01</span>
+                    Connect Instagram
+                  </h3>
+                  <p class="solution-step-card__copy">
+                    Link your account and import your existing content.
+                  </p>
+                </div>
+              </article>
+
+              <article
+                class="solution-step-card solution-premium-reveal"
+              >
+                <div class="solution-step-card__icon-wrap" aria-hidden="true">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path
+                      d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"
+                    />
+                  </svg>
+                </div>
+                <div class="solution-step-card__content">
+                  <h3 class="solution-step-card__title">
+                    <span class="solution-step-card__step">02</span>
+                    Set Your Categories
+                  </h3>
+                  <p class="solution-step-card__copy">
+                    Define the topics your audience cares about most.
+                  </p>
+                </div>
+              </article>
+
+              <article
+                class="solution-step-card solution-premium-reveal"
+              >
+                <div class="solution-step-card__icon-wrap" aria-hidden="true">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M12 3v3M12 18v3M3 12h3M18 12h3" />
+                    <path d="m5.6 5.6 2.2 2.2M16.2 16.2l2.2 2.2M18.4 5.6l-2.2 2.2M7.8 16.2l-2.2 2.2" />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                </div>
+                <div class="solution-step-card__content">
+                  <h3 class="solution-step-card__title">
+                    <span class="solution-step-card__step">03</span>
+                    Auto-grouping
+                  </h3>
+                  <p class="solution-step-card__copy">
+                    Our AI automatically scans your posts, groups them into the right categories, and builds a searchable profile for you.
+                  </p>
+                </div>
+              </article>
+
+              <article
+                class="solution-step-card solution-premium-reveal"
+              >
+                <div class="solution-step-card__icon-wrap" aria-hidden="true">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+                  </svg>
+                </div>
+                <div class="solution-step-card__content">
+                  <h3 class="solution-step-card__title">
+                    <span class="solution-step-card__step">04</span>
+                    Share Your Link in Your Bio
+                  </h3>
+                  <p class="solution-step-card__copy">
+                    Share your new custom library in your Instagram bio so followers can browse exactly what they want.
+                  </p>
+                </div>
+              </article>
+            </div>
           </div>
         </div>
       </section>
@@ -397,5 +1026,43 @@
     <footer>
       <div class="wrap">srch.bio — Built for storytellers.</div>
     </footer>
+
+    <script>
+      (function () {
+        var blocks = document.querySelectorAll(".solution-section-premium");
+        if (!blocks.length) return;
+
+        function revealAll() {
+          blocks.forEach(function (el) {
+            el.classList.add("is-visible");
+          });
+        }
+
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          revealAll();
+          return;
+        }
+
+        if (!("IntersectionObserver" in window)) {
+          revealAll();
+          return;
+        }
+
+        var obs = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (!entry.isIntersecting) return;
+              entry.target.classList.add("is-visible");
+              obs.unobserve(entry.target);
+            });
+          },
+          { threshold: 0.12, rootMargin: "0px 0px -6% 0px" }
+        );
+
+        blocks.forEach(function (el) {
+          obs.observe(el);
+        });
+      })();
+    </script>
   </body>
 </html>

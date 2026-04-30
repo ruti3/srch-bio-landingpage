@@ -7,46 +7,45 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
     <style>
       :root {
-        --bg: #fafafa;
+        --bg: #f9f9f7;
         --bg-elevated: #ffffff;
         --surface: #ffffff;
-        --border: #dbdbdb;
-        --text: #262626;
-        --muted: #8e8e8e;
-        --accent: #5851db;
-        --accent-hover: #4842b8;
-        --btn-bg: var(--accent);
+        --border: rgb(0 0 0 / 0.08);
+        --text: #0a0a0a;
+        --muted: #5c5c5c;
+        --frame: #e4daf5;
+        --pastel-mint-a: #d8f3e4;
+        --pastel-mint-b: #f2fbf6;
+        --pastel-lav-a: #e4dcfa;
+        --pastel-lav-b: #faf8ff;
+        --pastel-peach-a: #fad9c4;
+        --pastel-peach-b: #fff7f1;
+        --accent: #2d2640;
+        --accent-hover: #000000;
+        --btn-bg: #0a0a0a;
         --btn-text: #ffffff;
-        --tint-band: #f0f0f0;
-        --card-tint: #f5f5f5;
-        --card-radius: 16px;
-        --card-shadow:
-          0 1px 2px rgba(38, 38, 38, 0.04),
-          0 6px 20px rgba(38, 38, 38, 0.07);
-        --card-shadow-hover:
-          0 2px 4px rgba(38, 38, 38, 0.05),
-          0 14px 36px rgba(38, 38, 38, 0.1);
-        --radius-lg: 20px;
-        --radius-md: 14px;
+        --card-radius: 28px;
+        --card-shadow: 0 4px 24px rgb(0 0 0 / 0.05);
+        --card-shadow-hover: 0 10px 36px rgb(0 0 0 / 0.08);
+        --radius-lg: 32px;
+        --radius-md: 20px;
         --max: 1120px;
-        --solution-radius: 22px;
-        --solution-wire: rgba(0, 0, 0, 0.08);
-        --solution-shadow:
-          0 1px 2px rgba(24, 24, 30, 0.04),
-          0 18px 48px rgba(24, 24, 30, 0.07);
-        --solution-shadow-hover:
-          0 4px 12px rgba(24, 24, 30, 0.05),
-          0 26px 56px rgba(88, 81, 219, 0.1);
-        --hero-bg: #1a1a1a;
-        --hero-text: #fafafa;
-        --hero-muted: #a1a1a1;
-        --hero-visual-bg-start: #f5f5f4;
-        --hero-visual-bg-end: #ebebea;
+        --solution-radius: 28px;
+        --solution-wire: rgb(0 0 0 / 0.07);
+        --solution-shadow: 0 4px 24px rgb(0 0 0 / 0.05);
+        --solution-shadow-hover: 0 12px 40px rgb(0 0 0 / 0.08);
+        --hero-copy-bg: #f9f9f7;
+        --hero-visual-bg: linear-gradient(
+          145deg,
+          #efe8ff 0%,
+          #e8f7ef 48%,
+          #ffe8d9 100%
+        );
       }
 
       *,
@@ -64,46 +63,28 @@
         font-family: Inter, system-ui, -apple-system, sans-serif;
         background: var(--bg);
         color: var(--text);
-        line-height: 1.6;
+        line-height: 1.62;
+        letter-spacing: -0.01em;
         -webkit-font-smoothing: antialiased;
+        box-shadow: inset 0 0 0 clamp(6px, 1.5vw, 12px) var(--frame);
+        min-height: 100vh;
       }
 
       .noise {
         pointer-events: none;
         position: fixed;
         inset: 0;
-        opacity: 0.02;
+        opacity: 0.018;
         background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-        z-index: 0;
-      }
-
-      .glow {
-        pointer-events: none;
-        position: fixed;
-        top: -20%;
-        left: 50%;
-        transform: translateX(-50%);
-        width: min(95vw, 880px);
-        height: 480px;
-        background:
-          radial-gradient(
-            ellipse 55% 45% at 72% 18%,
-            rgba(88, 81, 219, 0.1) 0%,
-            transparent 65%
-          ),
-          radial-gradient(
-            ellipse 50% 40% at 28% 22%,
-            rgba(88, 81, 219, 0.06) 0%,
-            transparent 60%
-          );
         z-index: 0;
       }
 
       header {
         position: relative;
         z-index: 2;
-        background: var(--bg);
-        border-bottom: 1px solid var(--border);
+        background: rgb(255 255 255 / 0.85);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgb(0 0 0 / 0.06);
       }
 
       main,
@@ -126,40 +107,47 @@
       }
 
       .logo {
-        font-weight: 700;
-        font-size: 1.05rem;
-        letter-spacing: -0.02em;
+        font-weight: 800;
+        font-size: 1.0625rem;
+        letter-spacing: -0.035em;
         color: var(--text);
       }
 
       .logo span {
-        color: var(--accent);
+        color: var(--text);
+        opacity: 0.42;
+        font-weight: 700;
+        background: none;
+        -webkit-text-fill-color: currentColor;
       }
 
       .nav-cta {
-        font-size: 0.875rem;
+        font-size: 0.8125rem;
         font-weight: 600;
-        color: var(--text);
+        color: var(--btn-text);
         text-decoration: none;
-        padding: 0.5rem 1rem;
+        padding: 0.62rem 1.35rem;
         border-radius: 999px;
-        border: 1px solid var(--border);
-        background: var(--bg-elevated);
-        transition: border-color 0.2s, background 0.2s, color 0.2s;
+        border: none;
+        background: var(--btn-bg);
+        transition: transform 0.2s ease, background 0.2s ease,
+          box-shadow 0.2s ease;
+        box-shadow: 0 2px 14px rgb(0 0 0 / 0.12);
       }
 
       .nav-cta:hover {
-        border-color: var(--accent);
-        background: var(--accent);
-        color: #ffffff;
+        background: #000000;
+        transform: translateY(-1px);
+        box-shadow: 0 6px 22px rgb(0 0 0 / 0.18);
       }
 
-      /* Hero — split: dark copy | light visual */
+      /* Hero — split: light copy | pastel visual */
       .hero {
         padding: 0;
-        color: var(--hero-text);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        color: var(--text);
+        border-bottom: 1px solid rgb(0 0 0 / 0.06);
         overflow: hidden;
+        background: var(--hero-copy-bg);
       }
 
       .hero-split {
@@ -177,7 +165,7 @@
       }
 
       .hero-copy {
-        background-color: var(--hero-bg);
+        background: var(--hero-copy-bg);
         display: flex;
         align-items: center;
         padding: 2rem 1.25rem 2.25rem;
@@ -220,12 +208,7 @@
       }
 
       .hero-visual {
-        background: linear-gradient(
-          168deg,
-          var(--hero-visual-bg-start) 0%,
-          #eeecea 45%,
-          var(--hero-visual-bg-end) 100%
-        );
+        background: var(--hero-visual-bg);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -248,44 +231,68 @@
         object-fit: contain;
       }
 
+      @media (max-width: 899px) {
+        .hero-visual img {
+          max-width: min(360px, 84%);
+        }
+      }
+
       .hero h1 {
-        font-size: clamp(2rem, 4.2vw, 3rem);
-        font-weight: 700;
-        letter-spacing: -0.03em;
-        line-height: 1.1;
-        margin: 0 0 1rem;
-        color: var(--hero-text);
+        font-size: clamp(2.1rem, 4.5vw, 3.15rem);
+        font-weight: 800;
+        letter-spacing: -0.042em;
+        line-height: 1.05;
+        margin: 0 0 1.1rem;
+        color: var(--text);
       }
 
       .hero .hero-lead {
         font-size: 1.0625rem;
-        color: var(--hero-muted);
+        color: var(--muted);
         max-width: 42ch;
-        margin: 0 0 1.5rem;
-        line-height: 1.55;
+        margin: 0 0 1.75rem;
+        line-height: 1.65;
       }
 
       .btn {
         display: inline-flex;
         align-items: center;
         justify-content: center;
+        gap: 0.75rem;
         font-family: inherit;
-        font-size: 1rem;
+        font-size: 0.9375rem;
         font-weight: 600;
-        padding: 0.9rem 1.75rem;
+        padding: 0.55rem 0.55rem 0.55rem 1.45rem;
         border-radius: 999px;
         border: none;
         cursor: pointer;
         text-decoration: none;
         background: var(--btn-bg);
         color: var(--btn-text);
-        transition: transform 0.15s, box-shadow 0.2s;
+        box-shadow: 0 4px 22px rgb(0 0 0 / 0.14);
+        transition: transform 0.2s ease, box-shadow 0.2s ease,
+          background 0.2s ease;
       }
 
       .btn:hover {
-        transform: translateY(-1px);
-        background: var(--accent-hover);
-        box-shadow: 0 12px 28px rgba(88, 81, 219, 0.32);
+        transform: translateY(-2px);
+        background: #000000;
+        box-shadow: 0 10px 36px rgb(0 0 0 / 0.2);
+      }
+
+      .btn__icon {
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.35rem;
+        height: 2.35rem;
+        border-radius: 999px;
+        background: rgb(255 255 255 / 0.18);
+      }
+
+      .btn__icon svg {
+        display: block;
       }
 
       .mock {
@@ -293,7 +300,7 @@
         overflow: hidden;
         border: 1px solid var(--border);
         background: var(--surface);
-        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.08);
+        box-shadow: var(--card-shadow);
       }
 
       .mock img {
@@ -304,59 +311,55 @@
 
       /* Sections */
       section {
-        padding: 4rem 0;
+        padding: clamp(3.5rem, 8vw, 5.5rem) 0;
       }
 
       h2.section-title {
-        font-size: clamp(1.75rem, 3vw, 2.25rem);
-        font-weight: 700;
-        letter-spacing: -0.02em;
-        margin: 0 0 2rem;
-        padding-bottom: 0.65rem;
-        border-bottom: 2px solid var(--accent);
+        position: relative;
+        font-size: clamp(1.85rem, 3.2vw, 2.45rem);
+        font-weight: 800;
+        letter-spacing: -0.038em;
+        margin: 0 0 2.25rem;
+        padding-bottom: 0;
+        border-bottom: none;
         width: fit-content;
         max-width: 100%;
+        color: var(--text);
       }
 
-      h2.section-title.section-title--solution {
-        border-bottom-color: var(--accent);
+      h2.section-title::after {
+        content: "";
+        display: block;
+        margin-top: 0.75rem;
+        height: 4px;
+        width: min(5rem, 36vw);
+        border-radius: 2px;
+        background: var(--text);
+        opacity: 0.22;
       }
 
-      /* Pain — high-impact cards */
+      /* Pain — testimonial-style pull quotes */
       .pain-section {
         position: relative;
-        padding: 5rem 0;
-        background: linear-gradient(
-          165deg,
-          rgba(88, 81, 219, 0.09) 0%,
-          rgba(250, 250, 250, 0.98) 45%,
-          var(--bg) 100%
-        );
-        border-top: 1px solid rgba(88, 81, 219, 0.12);
-        border-bottom: 1px solid rgba(88, 81, 219, 0.08);
+        padding: clamp(4rem, 9vw, 5.75rem) 0;
+        background: var(--bg);
+        border-top: 1px solid rgb(0 0 0 / 0.06);
+        border-bottom: 1px solid rgb(0 0 0 / 0.05);
         overflow: hidden;
-      }
-
-      .pain-section::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        pointer-events: none;
       }
 
       .pain-kicker {
         margin: 0 0 0.5rem;
         font-size: 0.8125rem;
-        font-weight: 600;
-        letter-spacing: 0.14em;
+        font-weight: 700;
+        letter-spacing: 0.12em;
         text-transform: uppercase;
-        color: var(--accent);
+        color: var(--muted);
       }
 
+      /* Pain — pull quotes */
       .pain-section .section-title {
-        margin-bottom: 2.25rem;
+        margin-bottom: 2rem;
       }
 
       .pain-list {
@@ -364,34 +367,31 @@
         margin: 0;
         padding: 0;
         display: grid;
-        gap: 1rem;
+        gap: 1.35rem;
         grid-template-columns: 1fr;
       }
 
-      @media (min-width: 700px) {
+      @media (min-width: 680px) {
         .pain-list {
-          gap: 1.25rem;
-          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 1.5rem;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
         }
       }
 
       .pain-list__item {
-        display: grid;
-        grid-template-columns: auto 1fr;
-        gap: 1rem 1.25rem;
-        align-items: start;
+        position: relative;
         margin: 0;
-        padding: 1.35rem 1.35rem 1.4rem 1.25rem;
-        border-radius: var(--radius-md);
-        border: 1px solid var(--border);
-        background: var(--surface);
+        padding: 1.35rem 1.5rem 1.35rem 1.45rem;
+        border-radius: var(--card-radius);
+        border: 1px solid rgb(0 0 0 / 0.06);
+        background: linear-gradient(180deg, #ffffff 0%, #faf9f6 100%);
         box-shadow: var(--card-shadow);
         opacity: 0;
-        animation: pain-reveal 0.65s ease forwards;
+        animation: pain-reveal 0.68s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         transition:
-          transform 0.25s ease,
-          box-shadow 0.25s ease,
-          border-color 0.25s ease;
+          transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+          box-shadow 0.3s ease,
+          border-color 0.3s ease;
       }
 
       .pain-list__item:nth-child(1) {
@@ -399,54 +399,131 @@
       }
 
       .pain-list__item:nth-child(2) {
-        animation-delay: 0.18s;
+        animation-delay: 0.14s;
       }
 
       .pain-list__item:nth-child(3) {
-        animation-delay: 0.31s;
+        animation-delay: 0.23s;
+      }
+
+      .pain-list__item:nth-child(4) {
+        animation-delay: 0.32s;
       }
 
       .pain-list__item:hover {
-        transform: translateY(-3px);
+        transform: translateY(-4px);
         box-shadow: var(--card-shadow-hover);
-        border-color: rgba(88, 81, 219, 0.28);
+        border-color: rgb(0 0 0 / 0.09);
       }
 
-      .pain-list__mark {
-        display: inline-flex;
-        flex-shrink: 0;
-        align-items: center;
-        justify-content: center;
-        color: var(--accent);
-        line-height: 0;
+      .pain-list__blockquote {
+        margin: 0;
+        padding: 0;
+        position: relative;
       }
 
-      .pain-list__mark svg {
+      .pain-list__blockquote::before {
+        content: "\201C";
+        position: absolute;
+        left: 0;
+        top: -0.28rem;
+        font-family: Inter, system-ui, -apple-system, sans-serif;
+        font-size: clamp(2.1rem, 5vw, 2.95rem);
+        line-height: 1;
+        font-weight: 700;
+        letter-spacing: -0.05em;
+        color: rgb(0 0 0 / 0.12);
+        pointer-events: none;
+      }
+
+      .pain-list__blockquote::after {
+        content: "\201D";
         display: block;
-        width: 1.125rem;
-        height: 1.125rem;
-      }
-
-      .pain-list__content {
-        min-width: 0;
+        margin-top: 0.35rem;
+        text-align: right;
+        font-family: Inter, system-ui, -apple-system, sans-serif;
+        font-size: clamp(1.45rem, 3.2vw, 1.95rem);
+        line-height: 1;
+        font-weight: 700;
+        letter-spacing: -0.04em;
+        color: rgb(0 0 0 / 0.1);
+        pointer-events: none;
       }
 
       .pain-list__hook {
-        margin: 0 0 0.45rem;
-        font-size: clamp(1.0625rem, 2.2vw, 1.1875rem);
-        font-weight: 600;
-        letter-spacing: -0.028em;
-        line-height: 1.28;
+        margin: 0;
+        padding: 0.2rem 0 0 0.12rem;
+        font-family: Inter, system-ui, -apple-system, sans-serif;
+        font-style: normal;
+        font-weight: 700;
+        font-size: clamp(1.09rem, 2.1vw, 1.28rem);
+        letter-spacing: -0.03em;
+        line-height: 1.32;
         color: var(--text);
       }
 
-      .pain-list__text {
-        margin: 0;
-        font-size: 0.9375rem;
-        line-height: 1.5;
-        letter-spacing: -0.015em;
-        color: var(--muted);
+      .pain-list__hook mark.pain-quote__hl {
+        font-weight: 800;
+        color: var(--text);
+        padding: 0.08em 0.32em 0.1em;
+        border-radius: 0.32em;
+        border-bottom: 2px solid transparent;
+        box-decoration-break: clone;
+        -webkit-box-decoration-break: clone;
       }
+
+      .pain-list__item:nth-child(1) .pain-list__hook mark.pain-quote__hl {
+        background: rgb(214 245 228 / 0.88);
+        border-bottom-color: rgb(47 120 86 / 0.38);
+      }
+
+      .pain-list__item:nth-child(2) .pain-list__hook mark.pain-quote__hl {
+        background: rgb(232 224 252 / 0.92);
+        border-bottom-color: rgb(108 78 168 / 0.4);
+      }
+
+      .pain-list__item:nth-child(3) .pain-list__hook mark.pain-quote__hl {
+        background: rgb(255 228 210 / 0.92);
+        border-bottom-color: rgb(190 98 58 / 0.4);
+      }
+
+      .pain-list__item:nth-child(4) .pain-list__hook mark.pain-quote__hl {
+        background: rgb(214 238 255 / 0.9);
+        border-bottom-color: rgb(56 122 168 / 0.42);
+      }
+
+      @media (max-width: 679px) {
+        .pain-list {
+          gap: 1.05rem;
+        }
+
+        .pain-list__item {
+          padding: 0.92rem 1.15rem 0.88rem 1.1rem;
+          border-radius: calc(var(--card-radius) - 4px);
+        }
+
+        .pain-list__hook {
+          padding: 0.08rem 0 0 0.06rem;
+          font-size: clamp(1.02rem, 3.95vw, 1.17rem);
+          line-height: 1.26;
+          letter-spacing: -0.028em;
+        }
+
+        .pain-list__blockquote::before {
+          font-size: clamp(1.55rem, 6.2vw, 2rem);
+          top: -0.14rem;
+        }
+
+        .pain-list__blockquote::after {
+          margin-top: 0.2rem;
+          font-size: clamp(1.08rem, 4.2vw, 1.5rem);
+        }
+
+        .pain-list__hook mark.pain-quote__hl {
+          padding: 0.05em 0.26em 0.07em;
+        }
+      }
+
 
       @keyframes pain-reveal {
         from {
@@ -488,9 +565,13 @@
         position: relative;
         padding: 1.375rem 1.5rem 1.5rem;
         border-radius: var(--card-radius);
-        border: 1px solid var(--border);
-        border-top: 2px solid var(--accent);
-        background: var(--surface);
+        border: 1px solid rgb(0 0 0 / 0.07);
+        border-top: none;
+        background: linear-gradient(
+          170deg,
+          var(--pastel-lav-b) 0%,
+          var(--surface) 100%
+        );
         box-shadow: var(--card-shadow);
         transition:
           transform 0.22s ease,
@@ -501,7 +582,7 @@
       .card:hover {
         transform: translateY(-2px);
         box-shadow: var(--card-shadow-hover);
-        border-color: #d1d1d1;
+        border-color: rgb(0 0 0 / 0.1);
       }
 
       @media (prefers-reduced-motion: reduce) {
@@ -532,54 +613,85 @@
         color: var(--muted);
       }
 
+      /* Bridge — “we built” handoff */
+      .built-strip {
+        position: relative;
+        padding: clamp(3rem, 7vw, 5rem) 0;
+        text-align: center;
+        overflow: hidden;
+        border-top: 1px solid rgb(120 92 205 / 0.28);
+        border-bottom: 1px solid rgb(120 92 205 / 0.22);
+        background-color: #bfb1f9;
+        background-image:
+          radial-gradient(
+            ellipse 110% 90% at 2% 50%,
+            rgb(251 216 239 / 0.92) 0%,
+            transparent 58%
+          ),
+          radial-gradient(
+            ellipse 85% 80% at 98% 20%,
+            rgb(253 219 173 / 0.94) 0%,
+            transparent 54%
+          ),
+          radial-gradient(
+            ellipse 70% 95% at 48% 100%,
+            rgb(169 239 217 / 0.82) 0%,
+            transparent 52%
+          ),
+          linear-gradient(
+            126deg,
+            #a89eef 0%,
+            #c9abf4 26%,
+            #e794d8 54%,
+            #ffb089 82%,
+            #7fddce 112%
+          );
+      }
+
+      .built-strip__inner {
+        max-width: 44rem;
+        margin-inline: auto;
+        position: relative;
+        z-index: 1;
+      }
+
+      .built-strip__title {
+        margin: 0 0 1rem;
+        font-size: clamp(1.35rem, 2.9vw, 1.72rem);
+        font-weight: 700;
+        letter-spacing: -0.032em;
+        line-height: 1.14;
+        color: rgb(0 0 0 / 0.72);
+        text-shadow: 0 1px 0 rgb(255 255 255 / 0.35);
+      }
+
+      .built-strip__bio {
+        color: var(--text);
+        opacity: 0.88;
+        font-weight: 800;
+        background: none;
+        -webkit-text-fill-color: currentColor;
+        text-shadow: 0 1px 0 rgb(255 255 255 / 0.28);
+      }
+
+      .built-strip__lead {
+        margin: 0 auto;
+        max-width: min(38rem, 100%);
+        font-size: clamp(1.45rem, 5vw, 2.35rem);
+        font-weight: 800;
+        line-height: 1.33;
+        letter-spacing: -0.035em;
+        color: var(--text);
+        text-shadow: 0 1px 0 rgb(255 255 255 / 0.3);
+      }
+
       /* Solution — premium split: mock + stacked steps */
       .solution-section-premium {
         position: relative;
-        padding: clamp(3.5rem, 8vw, 5.75rem) 0 clamp(3.75rem, 7vw, 5.5rem);
-        background:
-          radial-gradient(
-            ellipse 95% 65% at 12% 18%,
-            rgba(88, 81, 219, 0.05) 0%,
-            transparent 55%
-          ),
-          radial-gradient(
-            ellipse 70% 50% at 92% 85%,
-            rgba(88, 81, 219, 0.04) 0%,
-            transparent 48%
-          ),
-          linear-gradient(
-            180deg,
-            #fdfdfd 0%,
-            #fafafa 42%,
-            #ffffff 100%
-          );
-        border-top: 1px solid var(--solution-wire);
-        border-bottom: 1px solid var(--solution-wire);
-      }
-
-      .solution-section__intro {
-        margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
-      }
-
-      .solution-section__title {
-        font-size: clamp(2rem, 4vw, 2.75rem);
-        font-weight: 700;
-        letter-spacing: -0.038em;
-        line-height: 1.1;
-        margin: 0 0 1rem;
-        padding: 0;
-        border: none;
-        color: var(--text);
-      }
-
-      .solution-section__subtitle {
-        margin: 0;
-        max-width: 34rem;
-        font-size: clamp(1rem, 2vw, 1.1875rem);
-        font-weight: 400;
-        line-height: 1.62;
-        letter-spacing: -0.018em;
-        color: #5c5c61;
+        padding: clamp(3.75rem, 8vw, 5.75rem) 0 clamp(3.75rem, 7vw, 5.5rem);
+        background: var(--bg);
+        border-top: 1px solid rgb(0 0 0 / 0.06);
+        border-bottom: 1px solid rgb(0 0 0 / 0.05);
       }
 
       .solution-split {
@@ -591,7 +703,7 @@
 
       @media (min-width: 992px) {
         .solution-split {
-          grid-template-columns: minmax(260px, 0.95fr) minmax(300px, 1.05fr);
+          grid-template-columns: minmax(320px, 1.55fr) minmax(280px, 1fr);
           gap: clamp(2.5rem, 4.5vw, 4.25rem);
         }
       }
@@ -610,11 +722,9 @@
         display: block;
         width: 100%;
         height: auto;
-        border-radius: clamp(14px, 2vw, 20px);
-        border: 1px solid var(--solution-wire);
-        box-shadow:
-          var(--solution-shadow),
-          0 0 0 1px rgba(255, 255, 255, 0.9) inset;
+        border-radius: clamp(22px, 3vw, var(--radius-lg));
+        border: 1px solid rgb(0 0 0 / 0.06);
+        box-shadow: var(--solution-shadow);
       }
 
       .solution-steps {
@@ -627,11 +737,10 @@
         display: flex;
         gap: 1.25rem;
         align-items: flex-start;
-        padding: clamp(1.35rem, 2.5vw, 1.625rem) clamp(1.35rem, 2.5vw, 1.75rem);
+        padding: clamp(1.45rem, 2.5vw, 1.75rem) clamp(1.45rem, 2.5vw, 1.85rem);
         border-radius: var(--solution-radius);
-        border: 1px solid var(--solution-wire);
-        background: rgba(255, 255, 255, 0.88);
-        backdrop-filter: blur(8px);
+        border: 1px solid rgb(0 0 0 / 0.06);
+        background: var(--surface);
         box-shadow: var(--solution-shadow);
         transition:
           transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
@@ -640,12 +749,43 @@
           background 0.35s ease;
       }
 
+      .solution-step-card:nth-child(1) {
+        background: linear-gradient(
+          168deg,
+          var(--pastel-mint-b) 0%,
+          var(--surface) 100%
+        );
+      }
+
+      .solution-step-card:nth-child(2) {
+        background: linear-gradient(
+          170deg,
+          var(--pastel-lav-b) 0%,
+          var(--surface) 100%
+        );
+      }
+
+      .solution-step-card:nth-child(3) {
+        background: linear-gradient(
+          171deg,
+          var(--pastel-peach-b) 0%,
+          var(--surface) 100%
+        );
+      }
+
+      .solution-step-card:nth-child(4) {
+        background: linear-gradient(
+          169deg,
+          var(--pastel-mint-b) 0%,
+          var(--pastel-lav-b) 100%
+        );
+      }
+
       .solution-step-card:hover,
       .solution-step-card:focus-within {
-        transform: translateY(-5px);
+        transform: translateY(-4px);
         box-shadow: var(--solution-shadow-hover);
-        border-color: rgba(88, 81, 219, 0.28);
-        background: linear-gradient(180deg, #ffffff 0%, #fcfbff 68%);
+        border-color: rgb(0 0 0 / 0.1);
       }
 
       .solution-step-card:focus-within {
@@ -654,19 +794,15 @@
 
       .solution-step-card__icon-wrap {
         flex-shrink: 0;
-        width: 50px;
-        height: 50px;
-        border-radius: 16px;
+        width: 52px;
+        height: 52px;
+        border-radius: 999px;
         display: flex;
         align-items: center;
         justify-content: center;
-        background: linear-gradient(
-          148deg,
-          rgba(88, 81, 219, 0.16) 0%,
-          rgba(88, 81, 219, 0.05) 100%
-        );
-        border: 1px solid rgba(88, 81, 219, 0.14);
-        color: var(--accent);
+        background: rgb(255 255 255 / 0.75);
+        border: 1px solid rgb(0 0 0 / 0.08);
+        color: var(--text);
       }
 
       .solution-step-card__icon-wrap svg {
@@ -691,10 +827,10 @@
         font-size: 0.75rem;
         font-weight: 700;
         font-variant-numeric: tabular-nums;
-        letter-spacing: 0.04em;
-        color: var(--accent);
+        letter-spacing: 0.06em;
+        color: var(--text);
+        opacity: 0.35;
         margin-right: 0.375rem;
-        opacity: 0.92;
       }
 
       .solution-step-card__copy {
@@ -702,7 +838,7 @@
         font-size: 0.9375rem;
         line-height: 1.64;
         letter-spacing: -0.014em;
-        color: #6a6a6f;
+        color: var(--muted);
       }
 
       @media (prefers-reduced-motion: reduce) {
@@ -755,30 +891,33 @@
         .solution-section-premium.is-visible .solution-mock-column.solution-premium-reveal {
           transition-delay: 0.12s;
         }
-
-        .solution-section-premium.is-visible .solution-section__intro.solution-premium-reveal {
-          transition-delay: 0s;
-        }
       }
 
       .cta-band {
         text-align: center;
-        padding: 4rem 0 5rem;
-        background: var(--tint-band);
+        padding: clamp(4rem, 10vw, 5.5rem) 0;
+        background: linear-gradient(
+          180deg,
+          var(--pastel-peach-b) 0%,
+          var(--pastel-lav-a) 52%,
+          var(--pastel-mint-b) 100%
+        );
+        border-top: 1px solid rgb(0 0 0 / 0.06);
+        border-bottom: 1px solid rgb(0 0 0 / 0.05);
       }
 
       footer {
-        border-top: 1px solid var(--border);
-        padding: 1.5rem 0;
+        border-top: 1px solid rgb(0 0 0 / 0.06);
+        padding: 1.65rem 0;
         text-align: center;
         font-size: 0.8125rem;
         color: var(--muted);
+        background: var(--bg-elevated);
       }
     </style>
   </head>
   <body>
     <div class="noise" aria-hidden="true"></div>
-    <div class="glow" aria-hidden="true"></div>
 
     <header>
       <div class="wrap nav">
@@ -794,14 +933,33 @@
             <div class="hero-copy-inner">
               <h1>Stop letting your best content die in the grid.</h1>
               <p class="hero-lead">
-                Turn your Instagram posts into topic-based bundles. The only link-in-bio built for storytellers.
+                <!-- Turn your Instagram into a searchable content hub. -->
+                Help your followers find the content they are looking for.
               </p>
-              <a class="btn" href="https://tally.so/r/Zja2yo">Get early access</a>
+              <a class="btn" href="https://tally.so/r/Zja2yo">
+                <span class="btn__text">Get early access</span>
+                <span class="btn__icon" aria-hidden="true">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="17"
+                    height="17"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.25"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M5 12h13" />
+                    <path d="m13 6 6 6-6 6" />
+                  </svg>
+                </span>
+              </a>
             </div>
           </div>
           <div class="hero-visual">
             <img
-              src="meal-prep-mockup.png"
+              src="meal-prep-mockup-simple.png"
               alt="Ben_TasteCo link-in-bio profiles and meal-prep topic grid on phones"
               width="1710"
               height="1360"
@@ -814,63 +972,50 @@
 
       <section class="pain-section" aria-labelledby="pain-heading">
         <div class="wrap">
-          <h2 id="pain-heading" class="section-title">We know your pain.</h2>
+          <h2 id="pain-heading" class="section-title">We heard your followers saying things like...
+          </h2>
           <ul class="pain-list">
             <li class="pain-list__item">
-              <span class="pain-list__mark" aria-hidden="true">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
-                  <path
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M6 6l12 12M18 6L6 18"
-                  />
-                </svg>
-              </span>
-              <div class="pain-list__content">
+              <blockquote class="pain-list__blockquote">
                 <p class="pain-list__hook">
-                  Followers can’t find the content they want.
+                  I know you posted about this, but <mark class="pain-quote__hl">I can’t find it</mark>.
                 </p>
-              </div>
+              </blockquote>
             </li>
             <li class="pain-list__item">
-              <span class="pain-list__mark" aria-hidden="true">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
-                  <path
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M6 6l12 12M18 6L6 18"
-                  />
-                </svg>
-              </span>
-              <div class="pain-list__content">
+              <blockquote class="pain-list__blockquote">
                 <p class="pain-list__hook">
-                  Great posts disappear in the grid.
+                  Do you have <mark class="pain-quote__hl">more posts</mark> on
+                  <mark class="pain-quote__hl">this topic</mark>?
                 </p>
-              </div>
+              </blockquote>
             </li>
             <li class="pain-list__item">
-              <span class="pain-list__mark" aria-hidden="true">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
-                  <path
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M6 6l12 12M18 6L6 18"
-                  />
-                </svg>
-              </span>
-              <div class="pain-list__content">
+              <blockquote class="pain-list__blockquote">
                 <p class="pain-list__hook">
-                  Series lose momentum between parts.
+                  I had to <mark class="pain-quote__hl">scroll back</mark> to 2019 to <mark class="pain-quote__hl">find that post</mark>…
                 </p>
-              </div>
+              </blockquote>
+            </li>
+            <li class="pain-list__item">
+              <blockquote class="pain-list__blockquote">
+                <p class="pain-list__hook">
+                  <mark class="pain-quote__hl">Where</mark> the h*ll is <mark class="pain-quote__hl">part 2</mark>?
+                </p>
+              </blockquote>
             </li>
           </ul>
+        </div>
+      </section>
+
+      <section class="built-strip" aria-labelledby="built-heading">
+        <div class="wrap built-strip__inner">
+          <h2 id="built-heading" class="built-strip__title">
+            So we built srch<span class="built-strip__bio">.bio</span>
+          </h2>
+          <p class="built-strip__lead">
+            All of your posts organized into searchable topics - with one link.
+          </p>
         </div>
       </section>
 
@@ -880,13 +1025,13 @@
         aria-labelledby="solution-heading"
       >
         <div class="wrap">
-          <h2 id="solution-heading" class="section-title">Our solution</h2>
+          <h2 id="solution-heading" class="section-title">How it works</h2>
 
           <div class="solution-split">
             <div class="solution-mock-column solution-premium-reveal">
               <figure class="solution-diagram">
                 <img
-                  src="solution-flow.png"
+                  src="solution-flow-mockup-2.png"
                   alt="Illustration of the srch.bio flow from Instagram bio to category dashboard and onboarding steps"
                   width="1478"
                   height="1198"
@@ -947,7 +1092,7 @@
                 <div class="solution-step-card__content">
                   <h3 class="solution-step-card__title">
                     <span class="solution-step-card__step">02</span>
-                    Set Your Categories
+                    Choose Your Categories
                   </h3>
                   <p class="solution-step-card__copy">
                     Define the topics your audience cares about most.
@@ -976,7 +1121,7 @@
                 <div class="solution-step-card__content">
                   <h3 class="solution-step-card__title">
                     <span class="solution-step-card__step">03</span>
-                    Auto-grouping
+                    Go grab a coffee
                   </h3>
                   <p class="solution-step-card__copy">
                     Our AI automatically scans your posts, groups them into the right categories, and builds a searchable profile for you.
@@ -1007,7 +1152,7 @@
                     Share Your Link in Your Bio
                   </h3>
                   <p class="solution-step-card__copy">
-                    Share your new custom library in your Instagram bio so followers can browse exactly what they want.
+                    Let your followers browse exactly what they want with a single link.
                   </p>
                 </div>
               </article>
@@ -1018,7 +1163,25 @@
 
       <section class="cta-band" id="early-access">
         <div class="wrap">
-          <a class="btn" href="https://tally.so/r/Zja2yo">Get early access</a>
+          <a class="btn" href="https://tally.so/r/Zja2yo">
+            <span class="btn__text">Get early access</span>
+            <span class="btn__icon" aria-hidden="true">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="17"
+                height="17"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.25"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M5 12h13" />
+                <path d="m13 6 6 6-6 6" />
+              </svg>
+            </span>
+          </a>
         </div>
       </section>
     </main>
